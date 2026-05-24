@@ -1,4 +1,4 @@
 
 --- 2026-05-24 16:57:17.692686 (seed=39, N=4620, epochs=4621) ---
-BEST  -> [4, 13, 16, 20, 23, 26, 32]  (suma=134, neparnih=2/7, niskih(<=19)=3/7, raspon=28)
-FINAL -> [19, 23, 24, 26, 29, 32, 35]  (suma=188, neparnih=4/7, niskih(<=19)=1/7, raspon=16)
+BEST  -> [4, x, 16, y, 23, z, 32]  (suma=134, neparnih=2/7, niskih(<=19)=3/7, raspon=28)
+FINAL -> [19, x, 24, y, 29, z, 35]  (suma=188, neparnih=4/7, niskih(<=19)=1/7, raspon=16)
