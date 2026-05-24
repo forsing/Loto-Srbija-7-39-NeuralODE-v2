@@ -1,12 +1,11 @@
 """
-multi-label 39 sigmoid izlaza → top‑7 (umesto pozicionog 7-output regresora koji ti je davao [5,10,15,20,25,30,35])
 features: lag(5), rolling freq (20/50/100), gap, statistike prošlog kola
 vremenski split: train + val (200) + back-test (100)
 BEST + FINAL težine (validacioni loss)
 back-test: hits/7, hit%, AUC, LRAP
 predikcija iz stvarno poslednjeg kola
 validacija 7 jedinstvenih, sortirano, 1..39 (bez random.randint fallback‑a)
-snimanje u NeuralODE_7_predikcija.txt
+snimanje u NeuralODE_7_v2_predikcija.txt
 determinizam: PyTorch single-thread, use_deterministic_algorithms, seedovi za sve
 Neural ODE arhitektura ostala (encoder → ODE → decoder, Euler integrator)
 """
@@ -55,8 +54,8 @@ torch.set_num_threads(1)
 # =========================
 # Konfiguracija
 # =========================
-CSV_PATH = "/Users/4c/Desktop/GHQ/KvantniRegresor/loto7hh_4620_k41.csv"
-OUT_TXT = Path("/Users/4c/Desktop/GHQ/KvantniRegresor/NeuralODE_7_predikcija.txt")
+CSV_PATH = "/loto7hh_4620_k41.csv"
+OUT_TXT = Path("/NeuralODE_7_predikcija.txt")
 N_MIN, N_MAX = 1, 39
 K = 7
 LAG = 5
@@ -258,7 +257,7 @@ if epoch == EPOCHS - 1:
         print(f"Epoch {epoch}: Loss = {loss.item():.6f}  best_val = {best_val:.6f}")
 print()
 """
-Epoch 299: Loss = 0.017727
+Epoch 4620: Loss = 0.384430  best_val = 1.149682
 """
 
 final_state = {k: v.detach().clone() for k, v in model.state_dict().items()}
@@ -347,7 +346,7 @@ print("🎯 Predikcija sledeće loto kombinacije:")
 print(f"  BEST  -> {pick_best.tolist()}  ({describe(pick_best)})")
 print(f"  FINAL -> {pick_final.tolist()}  ({describe(pick_final)})")
 """
-🎯 Predikcija sledeće loto kombinacije: [5, 10, 15, 20, 25, 30, 35]
+
 """
 
 
@@ -372,7 +371,7 @@ print()
 """
 START 2026-05-24 16:46:44.531724
 
-CSV: /Users/4c/Desktop/GHQ/KvantniRegresor/loto7hh_4620_k41.csv  |  izvlačenja: 4620, brojeva po kolu: 7
+CSV: /loto7hh_4620_k41.csv  |  izvlačenja: 4620, brojeva po kolu: 7
 
 Treniranje modela ...
 
@@ -386,9 +385,9 @@ FINAL       1.320   18.9%   0.523   0.266
 (slučajan baseline ≈ 1.256 hits/7)
 
 🎯 Predikcija sledeće loto kombinacije:
-  BEST  -> [4, 13, 16, 20, 23, 26, 32]  (suma=134, neparnih=2/7, niskih(<=19)=3/7, raspon=28)
-  FINAL -> [19, 23, 24, 26, 29, 32, 35]  (suma=188, neparnih=4/7, niskih(<=19)=1/7, raspon=16)
-Snimljeno u: /Users/4c/Desktop/GHQ/KvantniRegresor/NeuralODE_7_predikcija.txt
+  BEST  -> [4, x, 16, y, 23, z, 32]  (suma=134, neparnih=2/7, niskih(<=19)=3/7, raspon=28)
+  FINAL -> [19, x, 24, y, 29, z, 35]  (suma=188, neparnih=4/7, niskih(<=19)=1/7, raspon=16)
+Snimljeno u: /NeuralODE_7_predikcija.txt
 
 STOP 2026-05-24 16:57:17.693104
 
